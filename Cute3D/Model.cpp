@@ -1,6 +1,7 @@
 #include "Model.h"
 
 #include <stb_image.h>
+
 Model::Model(std::string const & path, bool gamma) : position(glm::vec3(0.0f, 0.0f, 0.0f)), scale(glm::vec3(0.2f, 0.2f, 0.2f))
 {
 	initializeOpenGLFunctions();

@@ -23,6 +23,5 @@ GUIMain::GUIMain(QWidget *parent) : QMainWindow(parent)
 	
 	setCentralWidget(view3D);
 
-	
 	connect(quit, &QAction::triggered, qApp, QApplication::quit);
 }

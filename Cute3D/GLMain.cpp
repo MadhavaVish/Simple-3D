@@ -7,12 +7,22 @@ GLMain::GLMain(QWidget *parent) : pauseGame(true)
 	setCursor(curs);
 	curs.setPos(mapToGlobal(QPoint(width() / 2, height() / 2)));
 	curs.setShape(Qt::BlankCursor);
-	
 	last = QPoint(width() / 2, height() / 2);
+
+	m_pCollisionConfiguration = new btDefaultCollisionConfiguration();
+	m_pDispatcher = new	btCollisionDispatcher(m_pCollisionConfiguration);
+	m_pBroadphase = new btDbvtBroadphase();
+	m_pSolver = new btSequentialImpulseConstraintSolver();
+	m_pWorld = new btDiscreteDynamicsWorld(m_pDispatcher, m_pBroadphase, m_pSolver, m_pCollisionConfiguration);
 }
 
 GLMain::~GLMain()
 {
+	delete m_pCollisionConfiguration;;;
+	delete m_pDispatcher;
+	delete m_pBroadphase;
+	delete m_pSolver;
+	delete m_pWorld;
 }
 
 void GLMain::initializeGL()
@@ -21,7 +31,7 @@ void GLMain::initializeGL()
 	connect(this, SIGNAL(frameSwapped()), this, SLOT(repaintGL()));
 
 	glViewport(0, 0, width(), height());
-	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.1,0.1,0.1 , 1.0f);
 	glEnable(GL_DEPTH_TEST);
 
 	shaders.push_back(GLShader("Basic.vert", "Basic.frag"));

@@ -2,8 +2,10 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLExtraFunctions>
-//#include <QCursor>
 #include <QPoint>
+
+#include "btBulletCollisionCommon.h"
+#include "btBulletDynamicsCommon.h"
 
 #include <chrono>
 #include <vector>
@@ -35,16 +37,22 @@ private:
 
 	int offsetx, offsety;
 	bool pauseGame;
+
 	double deltaTime;
 	high_resolution_clock::time_point currentFrame, lastFrame;
 	
 	QCursor curs;
 	QPoint cursorPos, center, last;
 
-
 	Camera camera;
 	std::vector<GLShader> shaders;
 	std::vector<Model> objects;
+
+	btBroadphaseInterface* m_pBroadphase;
+	btCollisionConfiguration* m_pCollisionConfiguration;
+	btCollisionDispatcher* m_pDispatcher;
+	btConstraintSolver* m_pSolver;
+	btDynamicsWorld* m_pWorld;
 };
 
 
