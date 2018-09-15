@@ -16,7 +16,7 @@ GUIMain::GUIMain(QWidget *parent) : QMainWindow(parent)
 
 	QSurfaceFormat format;
 	format.setRenderableType(QSurfaceFormat::OpenGL);
-	format.setProfile(QSurfaceFormat::CoreProfile);
+	format.setProfile(QSurfaceFormat::CompatibilityProfile);
 	format.setVersion(4, 6);
 	format.setSwapInterval(0);
 	QSurfaceFormat::setDefaultFormat(format);

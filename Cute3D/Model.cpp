@@ -1,8 +1,8 @@
 #include "Model.h"
 
 #include <stb_image.h>
-
-Model::Model(std::string const & path, bool gamma) : position(glm::vec3(0.0f, 0.0f, 0.0f)), scale(glm::vec3(0.2f, 0.2f, 0.2f))
+#include <iostream>
+Model::Model(std::string const & path, bool gamma)
 {
 	initializeOpenGLFunctions();
 	loadModel(path);
@@ -10,10 +10,7 @@ Model::Model(std::string const & path, bool gamma) : position(glm::vec3(0.0f, 0.
 
 void Model::draw(GLShader shader)
 {
-	glm::mat4 model;
-	model = glm::translate(model, position);
-	model = glm::scale(model, scale);
-	shader.setMat4("model", model);
+
 	for (unsigned int i = 0; i < meshes.size(); i++)
 		meshes[i].draw(shader);
 }

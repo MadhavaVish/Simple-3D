@@ -98,6 +98,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DebugDrawer.cpp" />
     <ClCompile Include="GLMain.cpp" />
     <ClCompile Include="GLShader.cpp" />
     <ClCompile Include="GUIMain.cpp" />
@@ -116,10 +117,13 @@
   <ItemGroup>
     <None Include="Basic.frag" />
     <None Include="Basic.vert" />
+    <None Include="Debug.frag" />
+    <None Include="Debug.vert" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DebugDrawer.h" />
     <ClInclude Include="GLShader.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />

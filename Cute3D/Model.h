@@ -12,7 +12,7 @@
 #include "GLShader.h"
 
 #include <vector>
-
+#include <string>
 using namespace std;
 
 class Model : protected QOpenGLExtraFunctions
@@ -32,10 +32,6 @@ public:
 	void draw(GLShader shader);
 
 private:
-	//Data
-	glm::vec3 position;
-	glm::vec3 scale;
-
 	/*  Functions   */
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
 	void loadModel(std::string const &path);
