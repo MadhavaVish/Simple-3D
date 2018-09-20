@@ -1,6 +1,11 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QDockWidget>
+#include <QFileDialog>
+#include <QLineEdit>
+
+#include <string>
 
 #include "GLMain.h"
 
@@ -10,8 +15,13 @@ class GUIMain : public QMainWindow
 public:
 
 	GUIMain(QWidget *parent = nullptr);
+private slots:
+	void browse();
+signals:
+	void fileSelected(std::string path);
 private:
-
-	GLMain *view3D;
+	QDockWidget* dock;
+	GLMain* view3D;
+	std::string filename;
 };
 

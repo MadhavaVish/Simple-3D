@@ -8,14 +8,16 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "Mesh.h"
-#include "GLShader.h"
-
 #include <vector>
 #include <string>
+
+#include "Mesh.h"
+#include "GLShader.h"
+#include "Object.h"
+
 using namespace std;
 
-class Model : protected QOpenGLExtraFunctions
+class Model : public Object, protected QOpenGLExtraFunctions
 {
 public:
 	/*  Model Data */
@@ -24,15 +26,15 @@ public:
 	std::string directory;
 	bool gammaCorrection;
 
-	/*  Functions   */
+	/*  Functions  */
 	// constructor, expects a filepath to a 3D model.
 	Model(std::string const &path, bool gamma = false);
 
 	// draws the model, and thus all its meshes
-	void draw(GLShader shader);
+	virtual void draw(GLShader shader);
 
 private:
-	/*  Functions   */
+	/*  Functions  */
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
 	void loadModel(std::string const &path);
 

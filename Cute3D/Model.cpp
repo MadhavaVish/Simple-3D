@@ -2,7 +2,8 @@
 
 #include <stb_image.h>
 #include <iostream>
-Model::Model(std::string const & path, bool gamma)
+
+Model::Model(std::string const & path, bool gamma) : Object()
 {
 	initializeOpenGLFunctions();
 	loadModel(path);
@@ -10,7 +11,11 @@ Model::Model(std::string const & path, bool gamma)
 
 void Model::draw(GLShader shader)
 {
-
+	glm::mat4 modelMatrix;
+	modelMatrix = glm::translate(modelMatrix, m_position);
+	modelMatrix = glm::scale(modelMatrix, m_scale);
+	modelMatrix *= glm::toMat4(m_orientation);
+	shader.setMat4("model", modelMatrix);
 	for (unsigned int i = 0; i < meshes.size(); i++)
 		meshes[i].draw(shader);
 }

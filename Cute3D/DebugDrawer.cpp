@@ -1,5 +1,6 @@
 #include "DebugDrawer.h"
 #include <iostream>
+
 DebugDrawer::DebugDrawer() {
 	initializeOpenGLFunctions();
 }
@@ -21,8 +22,6 @@ void DebugDrawer::drawLine(const btVector3 &from, const btVector3 &to, const btV
 	points[9] = color.x();
 	points[10] = color.y();
 	points[11] = color.z();
-	//std::cout << points[0] << points[2] << points[3] << std::endl;
-	//std::cout << points[6] << points[7] << points[8] << std::endl;
 	glDeleteBuffers(1, &VBO);
 	glDeleteVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -39,7 +38,6 @@ void DebugDrawer::drawLine(const btVector3 &from, const btVector3 &to, const btV
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_LINES, 0, 2);
 	glBindVertexArray(0);
-
 }
 
 void DebugDrawer::drawContactPoint(const btVector3 &pointOnB, const btVector3 &normalOnB, btScalar distance, int lifeTime, const btVector3 &color)
