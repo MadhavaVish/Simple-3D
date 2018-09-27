@@ -6,6 +6,7 @@
 #include <QSurfaceFormat>
 #include <QLayout>
 #include <QPushButton>
+#include <QLabel>
 
 #include <iostream>
 
@@ -28,14 +29,16 @@ GUIMain::GUIMain(QWidget *parent) : QMainWindow(parent)
 	setCentralWidget(view3D);
 
 	dock = new QDockWidget(this);
-
+	QLabel* selectLabel = new QLabel("Import Model");
 	QPushButton* button = new QPushButton("Browse");
-	QLineEdit* lineEdit = new QLineEdit();
 	QWidget* modelSelector = new QWidget();
 	QVBoxLayout* layout = new QVBoxLayout();
-	layout->addWidget(lineEdit);
+	layout->setSpacing(10);
+	layout->setContentsMargins(3,10,3,0);
+	layout->addWidget(selectLabel);
 	layout->addWidget(button);
-	
+	layout->addStretch();
+
 	modelSelector->setLayout(layout);
 	dock->setWidget(modelSelector);
 	addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, dock);
@@ -45,9 +48,10 @@ GUIMain::GUIMain(QWidget *parent) : QMainWindow(parent)
 }
 
 void GUIMain::browse() {
-	filename = QFileDialog::getOpenFileName(this,
-		tr("Open obj file"), "", tr("Model Files (*.obj)")).toStdString();
-	std::cout << filename << std::endl;
-	if (filename != "")	emit fileSelected(filename);
-
+	QString nut = QFileDialog::getOpenFileName(this,
+		tr("Open obj file"), "", tr("Model Files (*.obj)"));	
+	if (!nut.isEmpty() && !nut.isNull()) {
+		filename = nut.toStdString();
+		emit fileSelected(filename);
+	}
 }

@@ -7,6 +7,22 @@ Model::Model(std::string const & path, bool gamma) : Object()
 {
 	initializeOpenGLFunctions();
 	loadModel(path);
+	glm::vec3 size;
+	float negX = 999.0f, negY = 999.0f, negZ = 999.0f, posX = -999.0f, posY = -999.0f, posZ = -999.0f;
+	glm::vec3 centerOfMass(0.0,0.0,0.0);
+	for (auto mesh : meshes) {
+		for (auto verts : mesh.vertices) {
+			negX = negX > verts.Position.x ? verts.Position.x : negX;
+			negY = negY > verts.Position.y ? verts.Position.y : negY;
+			negZ = negZ > verts.Position.z ? verts.Position.z : negZ;
+			posX = posX < verts.Position.x ? verts.Position.x : posX;
+			posY = posY < verts.Position.y ? verts.Position.y : posY;
+			posZ = posZ < verts.Position.z ? verts.Position.z : posZ;
+		}
+	}
+	size = glm::vec3(posX + abs(negX), posY + abs(negY), posZ + abs(negZ))/2.0f;
+	centerOfMass = glm::vec3((posX + negX), (posY + negY), (posZ + negZ))/2.0f;
+	initializeRigidBody(size, centerOfMass);
 }
 
 void Model::draw(GLShader shader)
@@ -125,7 +141,6 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
 	// 4. height maps
 	std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
-
 	// return a mesh object created from the extracted mesh data
 	return Mesh(vertices, indices, textures);
 }

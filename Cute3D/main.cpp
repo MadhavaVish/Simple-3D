@@ -1,4 +1,3 @@
-
 #include <QtWidgets/QApplication>
 
 #include <vld.h>

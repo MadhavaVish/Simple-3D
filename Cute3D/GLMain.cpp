@@ -1,10 +1,9 @@
 #include "GLMain.h"
 #include <iostream>
 
-GLMain::GLMain(QWidget *parent) : pauseGame(true)
+GLMain::GLMain(QWidget *parent) : pauseGame(true), selected(nullptr)
 {
 	moving = false;
-	selected = nullptr;
 	cursor = QWidget::cursor();
 	setCursor(cursor);
 	cursor.setPos(mapToGlobal(QPoint(width() / 2, height() / 2)));
@@ -29,7 +28,7 @@ void GLMain::initializeGL()
 	setupGL();
 	std::cout << glGetString(GL_VERSION) << std::endl;
 	setupShaders();
-	addModel("objects/monki.obj");
+	addModel("objects/nanosuit.obj");
 	connect(this, SIGNAL(frameSwapped()), this, SLOT(repaintGL()));
 }
 
@@ -41,6 +40,7 @@ void GLMain::repaintGL() {
 
 void GLMain::paintGL()
 {
+	//makeCurrent();
 	currentFrame = high_resolution_clock::now();
 	deltaTime = duration<double>(currentFrame - lastFrame).count();
 	lastFrame = currentFrame;
@@ -71,10 +71,10 @@ void GLMain::checkMouseState() {
 	cursorPos = cursor.pos();
 	offsetx = cursorPos.x() - last.x();
 	
-	if (moving&&selected!=nullptr) {
+	if (moving && selected) {
 		selected->setPosition((float)offsetx*0.02, 0, 0);
 	}
-
+	
 	offsety = last.y() - cursorPos.y();
 	last = cursorPos;
 
@@ -158,8 +158,6 @@ void GLMain::mousePressEvent(QMouseEvent * event)
 
 				if (RayCallback.hasHit()) {
 					selected = static_cast<Object*>(RayCallback.m_collisionObject->getUserPointer());
-					selected->setRotation(0,0,3.14159/2);
-					std::cout << "nut" << std::endl;
 				}
 			}
 		}
@@ -196,10 +194,9 @@ void GLMain::setupShaders() {
 }
 
 void GLMain::addModel(std::string const& path) { 
-	std::cout << path << std::endl;
+	makeCurrent();
 	models.push_back(new Model(path));
 	if (m_pWorld) m_pWorld->addRigidBody(models.back()->GetRigidBody());
-	for (auto model : models) std::cout << model->GetRigidBody() << std::endl;
 }
 
 void GLMain::resizeGL(int w, int h)

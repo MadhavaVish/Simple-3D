@@ -60,10 +60,10 @@ private:
 	std::vector<Model*> models;
 	Object* selected;
 
-	btBroadphaseInterface* m_pBroadphase;
 	btCollisionConfiguration* m_pCollisionConfiguration;
 	btCollisionDispatcher* m_pDispatcher;
+	btBroadphaseInterface* m_pBroadphase;
 	btConstraintSolver* m_pSolver;
-	btDynamicsWorld* m_pWorld;
+	btDynamicsWorld* m_pWorld;	
 	DebugDrawer* m_pDebugDrawer;
 };

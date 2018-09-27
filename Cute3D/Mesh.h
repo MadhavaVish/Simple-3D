@@ -34,7 +34,7 @@ public:
 	std::vector<unsigned int> indices;
 	std::vector<Texture> textures;
 	unsigned int VAO;
-
+	
 	/*  Functions  */
 
 	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
@@ -44,7 +44,6 @@ public:
 private:
 	/*  Render data  */
 	unsigned int VBO, EBO;
-
 	/*  Functions    */
 	void setupMesh();	// initializes all the buffer objects/arrays
 };
